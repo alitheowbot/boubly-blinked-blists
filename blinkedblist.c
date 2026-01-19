@@ -5,7 +5,11 @@ Wrap this into list_init, list_insert, list_destroy
 
 Add a delete-by-value function
 
-Remove sentinels and compare designs
+------------
+if the user enters 0 as their first node, the if statement in nodeInsertion overwrites it when making the next node
+
+after u are done inserting, set tail->prev->next = NULL, and then tail = tail->prev
+
 
 */
 
@@ -18,6 +22,24 @@ typedef struct node {
     struct node* prev;
 } node;
 
+void nodeInsertion(node* head, node* tail, int value) {
+    
+
+    if (head->number == 0) {
+        head->number = value;
+    }
+    else {
+        node* n = malloc(sizeof(node));
+
+
+        n->number = value;
+        n->next = tail;
+        n->prev = tail->prev;
+        tail->prev->next = n;
+        tail->prev = n;
+    }
+}
+
 int main(void)
 {
     node* head = malloc(sizeof(node));
@@ -28,21 +50,70 @@ int main(void)
     tail->prev = head;
     tail->next = NULL;
 
+    head->number = 0;
+    tail->number = 0;
+
+// CONSTRUCTION ZONE ---- DO NOT SPEED
+// TODO: 
+// Convert this code to be dynamic, rather than static.
+/*
     for (int i = 0; i < 3; i++) {
-        node* n = malloc(sizeof(node));
-        n->number = i;
-        n->next = tail;
-        n->prev = tail->prev;
-        tail->prev->next = n;
-        tail->prev = n;
+        if (head->number == INT_MAX) {
+            head->number = i;
+        }
+        else if (i == 2) {
+            tail->number = i;
+        }
+        else {
+            
+        }
+}*/
+    
+
+    //TODO:
+    //Make this keep going until the user is all done
+    printf("Enter value: ");
+    int value = 0;
+    int ask = scanf("%d", &value);
+
+    nodeInsertion(head, tail, value);
+
+    printf("Enter value: ");
+    value = 0;
+    ask = scanf("%d", &value);
+
+    nodeInsertion(head, tail, value);
+
+    printf("Enter value: ");
+    value = 0;
+    ask = scanf("%d", &value);
+
+    nodeInsertion(head, tail, value);
+
+    printf("Enter value: ");
+    value = 0;
+    ask = scanf("%d", &value);
+
+    nodeInsertion(head, tail, value);
+
+    // -----
+
+    tail->prev->next = NULL;
+    free(tail);
+    tail = tail->prev;
+
+
+// END WORK ZONE
+
+
+    for (node* ptr = head; ptr != NULL; ptr = ptr->next) {
+        printf("%i\n", ptr->number);
     }
 
-    for (node* ptr = head->next; ptr != tail; ptr = ptr->next) {
-        if (ptr->next != NULL) {
-            if (ptr->prev != NULL) {
-                printf("%i\n", ptr->number);
-            }
-        }
+    printf("REVERSE REVERSE!\n");
+
+    for (node* ptr = tail; ptr != NULL; ptr = ptr->prev) {
+        printf("%i\n", ptr->number);
     }
 
     node* ptr = head;
