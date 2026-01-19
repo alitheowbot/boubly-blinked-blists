@@ -1,15 +1,20 @@
 /*
 TODO:
 
-Wrap this into list_init, list_insert, list_destroy
+QOL: 
 
-Add a delete-by-value function
+add list_init, list_destroy
+
+add a delete-by-value function
 
 ------------
+TECHNICAL: 
+
 if the user enters 0 as their first node, the if statement in nodeInsertion overwrites it when making the next node
 
 after u are done inserting, set tail->prev->next = NULL, and then tail = tail->prev
 
+malloc fail check 
 
 */
 
@@ -53,7 +58,11 @@ int main(void)
     head->number = 0;
     tail->number = 0;
 
+
 // CONSTRUCTION ZONE ---- DO NOT SPEED
+
+
+
 // TODO: 
 // Convert this code to be dynamic, rather than static.
 /*
@@ -71,7 +80,10 @@ int main(void)
     
 
     //TODO:
-    //Make this keep going until the user is all done
+    //Make this loop until the user is all done
+
+    // -----
+
     printf("Enter value: ");
     int value = 0;
     int ask = scanf("%d", &value);
@@ -103,19 +115,23 @@ int main(void)
     tail = tail->prev;
 
 
-// END WORK ZONE
 
 
+// END CONSTRUCTION ZONE
+
+    // Prints from head
     for (node* ptr = head; ptr != NULL; ptr = ptr->next) {
         printf("%i\n", ptr->number);
     }
 
     printf("REVERSE REVERSE!\n");
 
+    // Prints from tail
     for (node* ptr = tail; ptr != NULL; ptr = ptr->prev) {
         printf("%i\n", ptr->number);
     }
 
+    // Free memory
     node* ptr = head;
     while (ptr != NULL) {
         node* tmp = ptr->next;
