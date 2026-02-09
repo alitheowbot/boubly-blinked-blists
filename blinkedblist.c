@@ -30,7 +30,7 @@ typedef struct node {
 void nodeInsertion(node* head, node* tail, int value) {
     
 
-    if (head->number == 0) {
+    if (head->number == INT_MAX) {
         head->number = value;
     }
     else {
@@ -55,13 +55,14 @@ int main(void)
     tail->prev = head;
     tail->next = NULL;
 
-    head->number = 0;
+    head->number = INT_MAX;
     tail->number = 0;
 
 
 // CONSTRUCTION ZONE ---- DO NOT SPEED
 
-
+// Update 2/9/2026: i dont know what i meant with converting this code below. I dont see what is the use of it when i have the function nodeInsertion?
+//                  Maybe i already converted it but forgot to delete this comment.
 
 // TODO: 
 // Convert this code to be dynamic, rather than static.
@@ -77,12 +78,6 @@ int main(void)
             
         }
 }*/
-    
-
-    //TODO:
-    //Make this loop until the user is all done
-
-    // -----
 
     printf("Enter value: ");
     int value = 0;
@@ -90,25 +85,14 @@ int main(void)
 
     nodeInsertion(head, tail, value);
 
-    printf("Enter value: ");
-    value = 0;
-    ask = scanf("%d", &value);
+    while (value != -1) {
+        printf("Enter value: ");
+        value = 0;
+        ask = scanf("%d", &value);
 
-    nodeInsertion(head, tail, value);
-
-    printf("Enter value: ");
-    value = 0;
-    ask = scanf("%d", &value);
-
-    nodeInsertion(head, tail, value);
-
-    printf("Enter value: ");
-    value = 0;
-    ask = scanf("%d", &value);
-
-    nodeInsertion(head, tail, value);
-
-    // -----
+        if (value != -1)
+            nodeInsertion(head, tail, value);
+    }
 
     tail->prev->next = NULL;
     free(tail);
