@@ -3,16 +3,12 @@ TODO:
 
 QOL: 
 
-add list_init, list_destroy
+add list_destroy
 
 add a delete-by-value function
 
 ------------
 TECHNICAL: 
-
-if the user enters 0 as their first node, the if statement in nodeInsertion overwrites it when making the next node
-
-after u are done inserting, set tail->prev->next = NULL, and then tail = tail->prev
 
 malloc fail check 
 
@@ -45,11 +41,7 @@ void nodeInsertion(node* head, node* tail, int value) {
     }
 }
 
-int main(void)
-{
-    node* head = malloc(sizeof(node));
-    node* tail = malloc(sizeof(node));
-
+void nodeInitialization(node* head, node* tail) {
     head->prev = NULL;
     head->next = tail;
     tail->prev = head;
@@ -57,27 +49,15 @@ int main(void)
 
     head->number = INT_MAX;
     tail->number = 0;
+}
 
+int main(void)
+{
+    // Initializing our first list of nodes
+    node* head = malloc(sizeof(node));
+    node* tail = malloc(sizeof(node));
+    nodeInitialization(head, tail);
 
-// CONSTRUCTION ZONE ---- DO NOT SPEED
-
-// Update 2/9/2026: i dont know what i meant with converting this code below. I dont see what is the use of it when i have the function nodeInsertion?
-//                  Maybe i already converted it but forgot to delete this comment.
-
-// TODO: 
-// Convert this code to be dynamic, rather than static.
-/*
-    for (int i = 0; i < 3; i++) {
-        if (head->number == INT_MAX) {
-            head->number = i;
-        }
-        else if (i == 2) {
-            tail->number = i;
-        }
-        else {
-            
-        }
-}*/
 
     printf("Enter value: ");
     int value = 0;
@@ -97,11 +77,6 @@ int main(void)
     tail->prev->next = NULL;
     free(tail);
     tail = tail->prev;
-
-
-
-
-// END CONSTRUCTION ZONE
 
     // Prints from head
     for (node* ptr = head; ptr != NULL; ptr = ptr->next) {
